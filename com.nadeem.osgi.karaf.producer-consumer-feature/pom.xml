@@ -35,24 +35,103 @@
     <description>Create a feature with the defined dependencies set.</description>
 
     <build>
+		 <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.karaf.tooling</groupId>
+					<artifactId>karaf-maven-plugin</artifactId>
+					<version>4.0.0.M1</version>
+					<extensions>true</extensions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
         <plugins>
             <plugin>
-                <groupId>org.apache.karaf.tooling</groupId>
-                <artifactId>features-maven-plugin</artifactId>
-                <version>2.3.0.redhat-611412</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>generate-features-file</id>
+                        <id>filter</id>
+                        <phase>generate-resources</phase>
                         <goals>
-                            <goal>generate-features-file</goal>
+                            <goal>resources</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-artifacts</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach-artifact</goal>
                         </goals>
                         <configuration>
-                            <karafVersion>2.3.0.redhat-611412</karafVersion>
+                            <artifacts>
+                                <artifact>
+                                    <file>target/classes/features.xml</file>
+                                    <type>xml</type>
+                                    <classifier>features</classifier>
+                                </artifact>
+                            </artifacts>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-        </plugins>
-    </build>
+            <plugin>
+				<groupId>org.apache.karaf.tooling</groupId>
+				<artifactId>karaf-maven-plugin</artifactId>
+
+				<configuration>
+					<startLevel>50</startLevel>
+					<aggregateFeatures>true</aggregateFeatures>
+					<resolver>(obr)</resolver>
+					<checkDependencyChange>true</checkDependencyChange>
+					<failOnDependencyChange>false</failOnDependencyChange>
+					<logDependencyChanges>true</logDependencyChanges>
+					<overwriteChangedDependencies>true</overwriteChangedDependencies>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
+	
+	<profiles>
+        <profile>
+            <id>validate</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.karaf.tooling</groupId>
+                        <artifactId>features-maven-plugin</artifactId>
+                        <version>2.2.9</version>
+                        <configuration>
+                            <file>${project.build.directory}/classes/features.xml</file>
+                            <!-- <karafConfig>${project.build.directory}/classes/config.properties</karafConfig>
+                            <jreVersion>jre-1.6</jreVersion> -->
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>validate</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>validate</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
