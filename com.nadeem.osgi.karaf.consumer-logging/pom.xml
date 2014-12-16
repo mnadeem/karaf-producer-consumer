@@ -27,21 +27,39 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.nadeem.app.osgi.karaf</groupId>
     <artifactId>com.nadeem.osgi.karaf.consumer-logging</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <name>com.nadeem.osgi.karaf.consumer-logging Bundle</name>
     <description>com.nadeem.osgi.karaf.consumer-logging OSGi bundle project.</description>
 
     <dependencies>
+        
+         <dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.enterprise</artifactId>
+			<version>5.0.0</version>
+			<scope>provided</scope>
+		</dependency>
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
-            <version>4.3.1</version>
+            <version>5.0.0</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+			<groupId>com.nadeem.app.osgi.karaf</groupId>
+			<artifactId>com.nadeem.osgi.karaf.producer-api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.7</version>
+			<scope>provided</scope>
+		</dependency>
     </dependencies>
 
     <build>
@@ -57,7 +75,7 @@
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Bundle-Activator>com.nadeem.osgi.karaf.consumer.logging.Activator</Bundle-Activator>
                         <Export-Package>com.nadeem.osgi.karaf.consumer.logging*;version=${project.version}</Export-Package>
-                        <Import-Package>*</Import-Package>
+                        <Import-Package>com.nadeem.osgi.karaf.producer.api,org.osgi.util.tracker, org.osgi.framework, org.osgi.service.cm, org.slf4j</Import-Package>
                     </instructions>
                 </configuration>
             </plugin>

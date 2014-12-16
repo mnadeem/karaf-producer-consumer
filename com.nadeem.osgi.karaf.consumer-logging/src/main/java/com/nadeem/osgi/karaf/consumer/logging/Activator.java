@@ -17,15 +17,44 @@ package com.nadeem.osgi.karaf.consumer.logging;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.util.tracker.ServiceTracker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class Activator implements BundleActivator {
+import com.nadeem.osgi.karaf.producer.api.MessageListener;
+import com.nadeem.osgi.karaf.producer.api.MessageService;
 
-    public void start(BundleContext context) {
-        System.out.println("Starting the bundle");
-    }
+public class Activator implements BundleActivator , MessageListener {
+	
+	private static Logger LOGGER = LoggerFactory.getLogger(Activator.class.getName());
+	
+	public void start(BundleContext context) {
+		LOGGER.info("Starting the bundle");
+		
+		// Get a service tracker for the Tick service, using its
+		// class name
+		ServiceTracker<MessageService,MessageService> tracker = new ServiceTracker<MessageService, MessageService>(context, MessageService.class.getName(), null);
+		// Start the tracker
+		tracker.open();
+		// Find the service's API from the tracker. If the tick service
+		// is not running, we get a null here
+		MessageService producerService =  tracker.getService();
+		// Stop the tracker, since we're done with it
+		tracker.close();
+		// If we got a reference to the tick service, then call its
+		// addListener method to register this class as a receiver of
+		// tick events. Otherwise, throw an exception
+		if (producerService != null)
+			producerService.addListener(this);
+		else
+			throw new UnsupportedOperationException("Can't start consumer bundle, as producer service is not running");
+	}
 
-    public void stop(BundleContext context) {
-        System.out.println("Stopping the bundle");
-    }
+	public void stop(BundleContext context) {
+		LOGGER.info("Stopping the bundle");
+	}
 
+	public void onMessage(String message) {
+		LOGGER.info("Consumer Received Message: {}", message);		
+	}
 }

@@ -27,7 +27,6 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.nadeem.app.osgi.karaf.producer.api</groupId>
     <artifactId>com.nadeem.osgi.karaf.producer-api</artifactId>
     <packaging>bundle</packaging>
 

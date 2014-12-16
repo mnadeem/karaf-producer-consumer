@@ -20,9 +20,9 @@
 
     <feature name='producer-consumer' description='${project.name}' version='${project.version}'>
         <details>${project.description}</details>
-        <bundle>mvn:com.nadeem.app.osgi.karaf.producer.api/com.nadeem.osgi.karaf.producer-api/0.0.1-SNAPSHOT</bundle>
-        <bundle>mvn:com.nadeem.app.osgi.karaf/com.nadeem.osgi.karaf.producer-impl/0.0.1-SNAPSHOT</bundle>
-        <bundle>mvn:com.nadeem.app.osgi.karaf/com.nadeem.osgi.karaf.consumer-logging/0.0.1-SNAPSHOT</bundle>
+        <bundle start-level="80">mvn:com.nadeem.app.osgi.karaf/com.nadeem.osgi.karaf.producer-api/0.0.1-SNAPSHOT</bundle>
+        <bundle start-level="81">mvn:com.nadeem.app.osgi.karaf/com.nadeem.osgi.karaf.producer-impl/0.0.1-SNAPSHOT</bundle>
+        <bundle start-level="82">mvn:com.nadeem.app.osgi.karaf/com.nadeem.osgi.karaf.consumer-logging/0.0.1-SNAPSHOT</bundle>
     </feature>
 
 </features>
