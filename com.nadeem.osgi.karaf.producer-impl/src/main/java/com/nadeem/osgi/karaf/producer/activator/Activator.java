@@ -13,13 +13,14 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.nadeem.osgi.karaf.producer.api;
+package com.nadeem.osgi.karaf.producer.activator;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 public class Activator implements BundleActivator {
-
+	
+	
     public void start(BundleContext context) {
         System.out.println("Starting the bundle");
     }

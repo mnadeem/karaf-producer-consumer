@@ -29,7 +29,6 @@
 
     <groupId>com.nadeem.app.osgi.karaf.producer.api</groupId>
     <artifactId>com.nadeem.osgi.karaf.producer-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <name>com.nadeem.osgi.karaf.producer-api Bundle</name>
@@ -55,7 +54,6 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
-                        <Bundle-Activator>com.nadeem.osgi.karaf.producer.api.Activator</Bundle-Activator>
                         <Export-Package>com.nadeem.osgi.karaf.producer.api*;version=${project.version}</Export-Package>
                         <Import-Package>*</Import-Package>
                     </instructions>
